@@ -92,11 +92,16 @@ export default function Home() {
     }
   };
 
-  if (loading) return <div className="p-6">Loading...</div>;
+  if (loading) return (
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="text-xl text-gray-600">Loading...</div>
+    </div>
+  );
   if (!user) return null;
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 to-gray-200">
+      <div className="max-w-6xl mx-auto p-6">
       <h1 className="text-3xl font-bold mb-4">Hello, {user.email}</h1>
       
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow mb-6">
@@ -158,6 +163,7 @@ export default function Home() {
             </div>
           </div>
         ))}
+      </div>
       </div>
     </div>
   );
