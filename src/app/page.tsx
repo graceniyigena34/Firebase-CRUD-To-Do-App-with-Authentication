@@ -39,27 +39,40 @@ export default function Home() {
     e.preventDefault();
     if (!user || !title) return;
 
-    if (editingId) {
-      await updateDoc(doc(db, "tasks", editingId), { title, description, priority });
+    try {
+      if (editingId) {
+        const taskExists = tasks.find(t => t.id === editingId);
+        if (taskExists) {
+          await updateDoc(doc(db, "tasks", editingId), { title, description, priority });
+        }
+      } else {
+        await addDoc(collection(db, "tasks"), {
+          title,
+          description,
+          completed: false,
+          priority,
+          userEmail: user.email,
+        });
+      }
       setEditingId(null);
-    } else {
-      await addDoc(collection(db, "tasks"), {
-        title,
-        description,
-        completed: false,
-        priority,
-        userEmail: user.email,
-      });
+      setTitle("");
+      setDescription("");
+      setPriority("Low");
+      await fetchTasks();
+    } catch (error) {
+      console.error("Error adding/updating task:", error);
+      alert("Error: " + (error as any).message);
     }
-    setTitle("");
-    setDescription("");
-    setPriority("Low");
-    fetchTasks();
   };
 
   const toggleComplete = async (task: Task) => {
-    await updateDoc(doc(db, "tasks", task.id), { completed: !task.completed });
-    fetchTasks();
+    try {
+      await updateDoc(doc(db, "tasks", task.id), { completed: !task.completed });
+      await fetchTasks();
+    } catch (error) {
+      console.error("Error toggling task:", error);
+      await fetchTasks();
+    }
   };
 
   const handleEdit = (task: Task) => {
@@ -70,8 +83,13 @@ export default function Home() {
   };
 
   const handleDelete = async (id: string) => {
-    await deleteDoc(doc(db, "tasks", id));
-    fetchTasks();
+    try {
+      await deleteDoc(doc(db, "tasks", id));
+      setTasks(tasks.filter(t => t.id !== id));
+    } catch (error) {
+      console.error("Error deleting task:", error);
+      await fetchTasks();
+    }
   };
 
   if (loading) return <div className="p-6">Loading...</div>;
