@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Firebase CRUD To-Do App with Authentication
 
-## Getting Started
+A Task Management App built with Next.js, TypeScript, Firebase Authentication, and Firestore.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Authentication**: Register and login with email/password
+- **Protected Routes**: Only authenticated users can access the dashboard
+- **CRUD Operations**: Create, Read, Update, and Delete tasks
+- **User-specific Data**: Each user sees only their own tasks
+- **Task Properties**: Title, description, priority (Low/Medium/High), and completion status
+
+## Setup Instructions
+
+1. **Install Dependencies**
+   ```bash
+   npm install
+   ```
+
+2. **Configure Firebase**
+   - Create a Firebase project at [https://console.firebase.google.com](https://console.firebase.google.com)
+   - Enable Email/Password authentication in Firebase Console
+   - Create a Firestore database
+   - Copy your Firebase config and update `.env.local` with your credentials
+
+3. **Run the Development Server**
+   ```bash
+   npm run dev
+   ```
+
+4. **Access the App**
+   - Open [http://localhost:3000](http://localhost:3000)
+   - Register a new account
+   - Login and start managing tasks
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── login/page.tsx          # Login page
+│   ├── register/page.tsx       # Registration page
+│   ├── page.tsx                # Dashboard with CRUD operations
+│   └── layout.tsx              # Root layout
+├── components/
+│   └── Navbar.tsx              # Navigation with auth state
+├── hooks/
+│   └── useAuth.ts              # Custom hook for auth state
+├── lib/
+│   └── firebase.ts             # Firebase configuration
+└── types/
+    └── task.ts                 # Task interface
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Firestore Collection Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Collection**: `tasks`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Field       | Type    | Description                    |
+|-------------|---------|--------------------------------|
+| id          | string  | Auto-generated document ID     |
+| title       | string  | Task title                     |
+| description | string  | Task details                   |
+| completed   | boolean | Completion status              |
+| priority    | string  | "Low" \| "Medium" \| "High"    |
+| userEmail   | string  | Email of the task owner        |
 
-## Learn More
+## Technologies Used
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Next.js 16
+- TypeScript
+- Firebase Authentication
+- Firestore Database
+- Tailwind CSS
