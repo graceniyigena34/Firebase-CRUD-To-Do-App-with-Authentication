@@ -93,77 +93,146 @@ export default function Home() {
   };
 
   if (loading) return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="text-xl text-gray-600">Loading...</div>
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-green-400 via-emerald-500 to-teal-500">
+      <div className="text-2xl text-white font-semibold">Loading...</div>
     </div>
   );
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-100 to-gray-200">
-      <div className="max-w-6xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-4">Hello, {user.email}</h1>
-      
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow mb-6">
-        <h2 className="text-xl font-semibold mb-4">{editingId ? "Edit Task" : "Add Task"}</h2>
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="border p-2 w-full mb-3"
-          required
-        />
-        <textarea
-          placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          className="border p-2 w-full mb-3"
-        />
-        <select value={priority} onChange={(e) => setPriority(e.target.value as "Low" | "Medium" | "High")} className="border p-2 w-full mb-3">
-          <option value="Low">Low</option>
-          <option value="Medium">Medium</option>
-          <option value="High">High</option>
-        </select>
-        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
-          {editingId ? "Update" : "Add"} Task
-        </button>
-        {editingId && (
-          <button type="button" onClick={() => { setEditingId(null); setTitle(""); setDescription(""); setPriority("Low"); }} className="ml-2 bg-gray-400 text-white px-4 py-2 rounded">
-            Cancel
-          </button>
-        )}
-      </form>
-
-      <div className="space-y-4">
-        {tasks.map((task) => (
-          <div key={task.id} className="bg-white p-4 rounded shadow">
-            <div className="flex items-start justify-between">
-              <div className="flex-1">
-                <h3 className={`text-lg font-semibold ${task.completed ? "line-through" : ""}`}>{task.title}</h3>
-                <p className="text-gray-600">{task.description}</p>
-                <span className={`inline-block mt-2 px-2 py-1 text-sm rounded ${task.priority === "High" ? "bg-red-200" : task.priority === "Medium" ? "bg-yellow-200" : "bg-green-200"}`}>
-                  {task.priority}
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={task.completed}
-                  onChange={() => toggleComplete(task)}
-                  className="w-5 h-5"
-                />
-                <button onClick={() => handleEdit(task)} className="bg-yellow-500 text-white px-3 py-1 rounded text-sm">
-                  Edit
-                </button>
-                <button onClick={() => handleDelete(task.id)} className="bg-red-600 text-white px-3 py-1 rounded text-sm">
-                  Delete
-                </button>
-              </div>
+    <div className="min-h-screen bg-gradient-to-br from-green-400 via-emerald-500 to-teal-500 py-4 md:py-8">
+      <div className="max-w-6xl mx-auto px-4 md:px-6">
+        <div className="bg-white/95 backdrop-blur-sm rounded-2xl md:rounded-3xl shadow-2xl p-4 md:p-8 mb-4 md:mb-8">
+          <div className="flex items-center justify-between mb-4 md:mb-6">
+            <div>
+              <h1 className="text-2xl md:text-4xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">Welcome Back! 👋</h1>
+              <p className="text-gray-600 mt-1 md:mt-2 text-sm md:text-lg truncate">{user.email}</p>
             </div>
           </div>
-        ))}
-      </div>
+          
+          <div className="grid grid-cols-3 md:grid-cols-3 gap-3 md:gap-6">
+            <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-3 md:p-6 rounded-xl md:rounded-2xl shadow-lg text-white">
+              <div className="text-2xl md:text-4xl font-bold">{tasks.length}</div>
+              <div className="mt-1 md:mt-2 text-xs md:text-base text-blue-100">📋 Total</div>
+            </div>
+            <div className="bg-gradient-to-br from-green-500 to-green-600 p-3 md:p-6 rounded-xl md:rounded-2xl shadow-lg text-white">
+              <div className="text-2xl md:text-4xl font-bold">{tasks.filter(t => t.completed).length}</div>
+              <div className="mt-1 md:mt-2 text-xs md:text-base text-green-100">✅ Done</div>
+            </div>
+            <div className="bg-gradient-to-br from-orange-500 to-orange-600 p-3 md:p-6 rounded-xl md:rounded-2xl shadow-lg text-white">
+              <div className="text-2xl md:text-4xl font-bold">{tasks.filter(t => !t.completed).length}</div>
+              <div className="mt-1 md:mt-2 text-xs md:text-base text-orange-100">⏳ Pending</div>
+            </div>
+          </div>
+        </div>
+
+        <form onSubmit={handleSubmit} className="bg-white/95 backdrop-blur-sm p-4 md:p-8 rounded-2xl md:rounded-3xl shadow-2xl mb-4 md:mb-8">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+            {editingId ? "✏️ Edit Task" : "➕ Create New Task"}
+          </h2>
+          <div className="space-y-3 md:space-y-5">
+            <div>
+              <label className="block text-xs md:text-sm font-semibold text-gray-700 mb-2">📝 Task Title</label>
+              <input
+                type="text"
+                placeholder="Enter task title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="border-2 border-gray-200 p-3 md:p-4 w-full rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all text-base md:text-lg"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-xs md:text-sm font-semibold text-gray-700 mb-2">📄 Description</label>
+              <textarea
+                placeholder="Add task description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="border-2 border-gray-200 p-3 md:p-4 w-full rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all h-24 md:h-28 resize-none text-base md:text-lg"
+              />
+            </div>
+            <div>
+              <label className="block text-xs md:text-sm font-semibold text-gray-700 mb-2">🎯 Priority Level</label>
+              <select 
+                value={priority} 
+                onChange={(e) => setPriority(e.target.value as "Low" | "Medium" | "High")} 
+                className="border-2 border-gray-200 p-3 md:p-4 w-full rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all text-base md:text-lg"
+              >
+                <option value="Low">🟢 Low Priority</option>
+                <option value="Medium">🟡 Medium Priority</option>
+                <option value="High">🔴 High Priority</option>
+              </select>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 pt-2">
+              <button type="submit" className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-xl font-bold text-base md:text-lg hover:from-green-700 hover:to-emerald-700 transform hover:scale-[1.02] transition-all shadow-lg flex-1">
+                {editingId ? "💾 Update" : "➕ Add Task"}
+              </button>
+              {editingId && (
+                <button 
+                  type="button" 
+                  onClick={() => { setEditingId(null); setTitle(""); setDescription(""); setPriority("Low"); }} 
+                  className="bg-gray-500 text-white px-6 md:px-8 py-3 md:py-4 rounded-xl font-bold text-base md:text-lg hover:bg-gray-600 transition-all shadow-lg"
+                >
+                  ❌ Cancel
+                </button>
+              )}
+            </div>
+          </div>
+        </form>
+
+        <div className="bg-white/95 backdrop-blur-sm p-4 md:p-8 rounded-2xl md:rounded-3xl shadow-2xl">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">📋 Your Tasks</h2>
+          {tasks.length === 0 ? (
+            <div className="text-center py-12 md:py-16">
+              <div className="text-6xl md:text-8xl mb-4">📝</div>
+              <p className="text-gray-500 text-base md:text-xl">No tasks yet. Create your first task above!</p>
+            </div>
+          ) : (
+            <div className="space-y-3 md:space-y-4">
+              {tasks.map((task) => (
+                <div key={task.id} className="bg-gradient-to-r from-white to-gray-50 p-4 md:p-6 rounded-xl md:rounded-2xl shadow-lg hover:shadow-xl transition-all border-2 border-gray-100">
+                  <div className="flex items-start gap-3 md:gap-4">
+                    <input
+                      type="checkbox"
+                      checked={task.completed}
+                      onChange={() => toggleComplete(task)}
+                      className="w-5 h-5 md:w-7 md:h-7 mt-1 cursor-pointer accent-green-600 flex-shrink-0"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <h3 className={`text-lg md:text-2xl font-bold mb-1 md:mb-2 ${task.completed ? "line-through text-gray-400" : "text-gray-800"} break-words`}>
+                        {task.title}
+                      </h3>
+                      <p className={`mb-2 md:mb-3 text-sm md:text-lg ${task.completed ? "text-gray-400" : "text-gray-600"} break-words`}>
+                        {task.description || "No description"}
+                      </p>
+                      <span className={`inline-block px-3 md:px-4 py-1 md:py-2 text-xs md:text-sm font-bold rounded-full ${
+                        task.priority === "High" ? "bg-red-100 text-red-700" : 
+                        task.priority === "Medium" ? "bg-yellow-100 text-yellow-700" : 
+                        "bg-green-100 text-green-700"
+                      }`}>
+                        {task.priority === "High" ? "🔴" : task.priority === "Medium" ? "🟡" : "🟢"} {task.priority}
+                      </span>
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-2 md:gap-3 flex-shrink-0">
+                      <button 
+                        onClick={() => handleEdit(task)} 
+                        className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-white px-3 md:px-5 py-2 md:py-3 rounded-lg md:rounded-xl text-xs md:text-base font-bold hover:from-yellow-500 hover:to-yellow-600 transition-all shadow-md whitespace-nowrap"
+                      >
+                        ✏️ Edit
+                      </button>
+                      <button 
+                        onClick={() => handleDelete(task.id)} 
+                        className="bg-gradient-to-r from-red-500 to-red-600 text-white px-3 md:px-5 py-2 md:py-3 rounded-lg md:rounded-xl text-xs md:text-base font-bold hover:from-red-600 hover:to-red-700 transition-all shadow-md whitespace-nowrap"
+                      >
+                        🗑️ Delete
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
