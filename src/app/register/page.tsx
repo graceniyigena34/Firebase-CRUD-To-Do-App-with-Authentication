@@ -32,7 +32,7 @@ export default function Register() {
     setLoading(true);
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      router.push("/");
+      router.push("/dashboard");
     } catch (err: any) {
       setError(err.message);
       setLoading(false);

@@ -25,7 +25,7 @@ export default function Navbar() {
         </Link>
 
         <div className="hidden md:flex space-x-6 items-center">
-          <Link href="/" className="hover:text-gray-200">Dashboard</Link>
+          {user && <Link href="/dashboard" className="hover:text-gray-200">Dashboard</Link>}
           {user ? (
             <button onClick={handleLogout} className="bg-white text-blue-600 px-3 py-1 rounded-md font-medium">
               Logout
@@ -52,7 +52,7 @@ export default function Navbar() {
 
       {menuOpen && (
         <div className="md:hidden mt-3 flex flex-col space-y-3 text-center">
-          <Link href="/" className="hover:text-gray-200">Dashboard</Link>
+          {user && <Link href="/dashboard" className="hover:text-gray-200">Dashboard</Link>}
           {user ? (
             <button onClick={handleLogout} className="bg-white text-blue-600 px-3 py-1 rounded-md font-medium mx-auto">
               Logout
