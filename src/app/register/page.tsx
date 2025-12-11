@@ -160,9 +160,9 @@ export default function Register() {
         </div>
       </div>
       
-      <div className="absolute bottom-4 left-0 right-0 text-center text-white text-sm">
-        <p>© 2024 Task Manager. All rights reserved.</p>
-      </div>
+    
     </div>
+
+    
   );
 }
