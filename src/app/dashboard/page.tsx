@@ -111,17 +111,17 @@ export default function Dashboard() {
           </div>
           
           <div className="grid grid-cols-3 md:grid-cols-3 gap-3 md:gap-6">
-            <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-3 md:p-6 rounded-xl md:rounded-2xl shadow-lg text-white">
+            <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 p-3 md:p-6 rounded-xl md:rounded-2xl shadow-lg text-white">
               <div className="text-2xl md:text-4xl font-bold">{tasks.length}</div>
-              <div className="mt-1 md:mt-2 text-xs md:text-base text-blue-100">📋 Total</div>
+              <div className="mt-1 md:mt-2 text-xs md:text-base text-emerald-100">📋 Total</div>
             </div>
             <div className="bg-gradient-to-br from-green-500 to-green-600 p-3 md:p-6 rounded-xl md:rounded-2xl shadow-lg text-white">
               <div className="text-2xl md:text-4xl font-bold">{tasks.filter(t => t.completed).length}</div>
               <div className="mt-1 md:mt-2 text-xs md:text-base text-green-100">✅ Done</div>
             </div>
-            <div className="bg-gradient-to-br from-orange-500 to-orange-600 p-3 md:p-6 rounded-xl md:rounded-2xl shadow-lg text-white">
+            <div className="bg-gradient-to-br from-teal-500 to-teal-600 p-3 md:p-6 rounded-xl md:rounded-2xl shadow-lg text-white">
               <div className="text-2xl md:text-4xl font-bold">{tasks.filter(t => !t.completed).length}</div>
-              <div className="mt-1 md:mt-2 text-xs md:text-base text-orange-100">⏳ Pending</div>
+              <div className="mt-1 md:mt-2 text-xs md:text-base text-teal-100">⏳ Pending</div>
             </div>
           </div>
         </div>
@@ -216,13 +216,13 @@ export default function Dashboard() {
                     <div className="flex flex-col sm:flex-row gap-2 md:gap-3 flex-shrink-0">
                       <button 
                         onClick={() => handleEdit(task)} 
-                        className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-white px-3 md:px-5 py-2 md:py-3 rounded-lg md:rounded-xl text-xs md:text-base font-bold hover:from-yellow-500 hover:to-yellow-600 transition-all shadow-md whitespace-nowrap"
+                        className="bg-gradient-to-r from-emerald-400 to-emerald-500 text-white px-3 md:px-5 py-2 md:py-3 rounded-lg md:rounded-xl text-xs md:text-base font-bold hover:from-emerald-500 hover:to-emerald-600 transition-all shadow-md whitespace-nowrap"
                       >
                         ✏️ Edit
                       </button>
                       <button 
                         onClick={() => handleDelete(task.id)} 
-                        className="bg-gradient-to-r from-red-500 to-red-600 text-white px-3 md:px-5 py-2 md:py-3 rounded-lg md:rounded-xl text-xs md:text-base font-bold hover:from-red-600 hover:to-red-700 transition-all shadow-md whitespace-nowrap"
+                        className="bg-gradient-to-r from-gray-500 to-gray-600 text-white px-3 md:px-5 py-2 md:py-3 rounded-lg md:rounded-xl text-xs md:text-base font-bold hover:from-gray-600 hover:to-gray-700 transition-all shadow-md whitespace-nowrap"
                       >
                         🗑️ Delete
                       </button>

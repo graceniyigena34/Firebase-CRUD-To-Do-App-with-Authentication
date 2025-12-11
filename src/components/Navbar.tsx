@@ -5,20 +5,25 @@ import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { user } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
 
   const handleLogout = async () => {
     await signOut(auth);
     router.push("/login");
   };
 
+  if (pathname === "/login") {
+    return null;
+  }
+
   return (
-    <nav className="bg-blue-600 text-white shadow-md p-4">
+    <nav className="bg-gradient-to-r from-green-600 to-emerald-600 text-white shadow-md p-4">
       <div className="container mx-auto flex justify-between items-center">
         <Link href="/" className="text-2xl font-bold">
           Firebase To-Do
