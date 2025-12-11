@@ -43,7 +43,7 @@ export default function Login() {
         )}
         <form onSubmit={login} className="space-y-5">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">📧 Email Address</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
             <input
               type="email"
               placeholder="Enter your email"
@@ -65,7 +65,7 @@ export default function Login() {
             />
           </div>
           <button className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-4 py-4 w-full rounded-xl font-bold text-lg hover:from-green-700 hover:to-emerald-700 transform hover:scale-[1.02] transition-all shadow-lg">
-            🚀 Sign In
+             Sign In
           </button>
         </form>
         <div className="mt-8 text-center">
